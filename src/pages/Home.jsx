@@ -47,6 +47,32 @@ const Home = () => {
     );
   };
 
+
+  const getExpiryColor = (expiryDate, quantity) => {
+  const now = new Date();
+  const expiry = new Date(expiryDate);
+  const in7Days = new Date();
+  in7Days.setDate(now.getDate() + 7);
+
+  if (isNaN(expiry)) return { label: "Invalid", className: "text-gray-500" };
+
+  if (expiry < now) {
+    return { label: "Expired", className: "text-red-600 font-semibold" };
+  }
+
+  if (expiry >= now && expiry <= in7Days) {
+    return { label: "Expiring Soon", className: "text-orange-500 font-medium" };
+  }
+
+  if (quantity <= 2) {
+    return { label: "Low Stock", className: "text-yellow-600 font-medium" };
+  }
+
+  return { label: "", className: "text-green-600" };
+};
+
+
+
   return (
     <div className="min-h-screen bg-[#f9fdfb] text-gray-800">
       {/* Navbar */}
@@ -115,6 +141,7 @@ const Home = () => {
             onDelete={handleDeleteItem}
             onDeleteStock={handleDeleteStock}
             onDecrement={handleDecrement}
+            getExpiryColor={getExpiryColor}
           />
         </section>
       </div>

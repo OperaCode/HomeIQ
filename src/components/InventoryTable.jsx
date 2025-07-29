@@ -9,7 +9,13 @@ const formatDate = (dateStr) => {
   return isNaN(date) ? "Invalid date" : date.toLocaleDateString();
 };
 
-const InventoryTable = ({ inventory, onDelete, onDecrement ,onDeleteStock}) => {
+const InventoryTable = ({
+  inventory,
+  onDelete,
+  onDecrement,
+  onDeleteStock,
+  getExpiryColor,
+}) => {
   const stockNames = inventory.map((stock) => stock.stockName);
   const [selectedStock, setSelectedStock] = useState(stockNames[0] || null);
 
@@ -101,9 +107,20 @@ const InventoryTable = ({ inventory, onDelete, onDecrement ,onDeleteStock}) => {
                           {item.category || "Uncategorized"}
                         </td>
                         <td className="px-4 py-2 text-sm">{item.quantity}</td>
-                        <td className="px-4 py-2 text-sm">
+                        {/* <td className="px-4 py-2 text-sm">
                           {formatDate(item.expiryDate)}
+                        </td> */}
+                        <td className="px-4 py-2 text-sm">
+                          <span
+                            className={
+                              getExpiryColor(item.expiryDate, item.quantity)
+                                .className
+                            }
+                          >
+                            {formatDate(item.expiryDate)}
+                          </span>
                         </td>
+
                         <td className="px-4 py-2 text-center flex gap-2 justify-center">
                           <button
                             onClick={() => onDecrement(item.id)}
