@@ -1,5 +1,6 @@
 // src/components/AddItemForm.jsx
 import React, { useState } from "react";
+import { TrashIcon } from "@heroicons/react/16/solid";
 
 const AddItemForm = ({ onAdd }) => {
   const [formData, setFormData] = useState({

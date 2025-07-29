@@ -21,7 +21,17 @@ const Home = () => {
     setItems(items.filter((item) => item.id !== id));
   };
 
- 
+ const handleDecrement = (id) => {
+  setInventory((prev) =>
+    prev.map((item) =>
+      item.id === id && item.quantity > 0
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    )
+  );
+};
+
+
 
   const handleAddItem = item => {
     setInventory(prev => [...prev, item]);
@@ -36,7 +46,7 @@ const Home = () => {
       <h1 className="text-2xl font-bold mb-4">My Pantry</h1>
       <InventoryStats inventory={inventory} />
       <AddItemForm onAdd={handleAddItem} />
-      <InventoryTable inventory={inventory} onDelete={handleDeleteItem} />
+      <InventoryTable inventory={inventory} onDelete={handleDeleteItem}  onDecrement={handleDecrement}/>
      
     </div>
   );
