@@ -1,98 +1,84 @@
 import React, { useState } from "react";
 import {
-  CheckCircleIcon,
+  ArrowRightIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom";
+import Home from "../assets/home.png"
 
 const features = [
-  "Track pantry items in real time",
-  "Smart expiry reminders",
-  "Usage history and insights",
-  "One-click shopping list generation",
+  "Track inventory in real time",
+  "Smart expiry alerts",
+  "Usage trends and insights",
+  "Instant shopping lists",
+];
+
+const FeatureCard = ({ title, description }) => (
+  <div className="bg-emerald-100 rounded-2xl p-6 shadow-sm">
+    <h3 className="text-xl font-semibold mb-2 text-emerald-800">{title}</h3>
+    <p className="text-slate-700 text-sm">{description}</p>
+  </div>
+);
+
+const testimonials = [
+  { quote: "HomeIQ keeps my kitchen organized!", author: "Emma L." },
+  { quote: "No more wasted food or overbuying!", author: "Liam R." },
 ];
 
 const LandingPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      setMenuOpen(false);
-    }
-  };
+  const [hoveredFeature, setHoveredFeature] = useState(null);
 
   return (
-    <div className="bg-white text-gray-800 scroll-smooth">
+    <div className="bg-white text-slate-800 font-sans scroll-smooth">
       {/* Header */}
       <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
-          <h1 className="text-2xl font-bold text-green-600">PantryPal</h1>
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+          <h1 className="text-2xl font-bold text-teal-600 transition-transform hover:scale-105">
+            HomeIQ
+          </h1>
           <nav className="hidden md:flex space-x-6 text-sm font-medium">
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="hover:text-green-600"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("how")}
-              className="hover:text-green-600"
-            >
-              How It Works
-            </button>
-            <button
-              onClick={() => scrollToSection("features")}
-              className="hover:text-green-600"
-            >
-              Features
-            </button>
-            <button
-              onClick={() => scrollToSection("testimonials")}
-              className="hover:text-green-600"
-            >
-              Testimonials
-            </button>
+            {["Home", "How It Works", "Features", "Testimonials"].map(
+              (item, idx) => (
+                <a
+                  key={item}
+                  href={`#${["hero", "how", "features", "testimonials"][idx]}`}
+                  className="text-slate-800 hover:text-teal-600 transition-colors"
+                  aria-label={`Navigate to ${item}`}
+                >
+                  {item}
+                </a>
+              )
+            )}
           </nav>
-          <div className="md:hidden">
-            <button onClick={() => setMenuOpen(!menuOpen)}>
-              {menuOpen ? (
-                <XMarkIcon className="h-6 w-6" />
-              ) : (
-                <Bars3Icon className="h-6 w-6" />
-              )}
-            </button>
-          </div>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="md:hidden focus:outline-none"
+          >
+            {menuOpen ? (
+              <XMarkIcon className="h-6 w-6 text-slate-800" />
+            ) : (
+              <Bars3Icon className="h-6 w-6 text-slate-800" />
+            )}
+          </button>
         </div>
-
-        {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-200 px-6 py-4 space-y-3">
-            <button
-              onClick={() => scrollToSection("hero")}
-              className="block w-full text-left"
-            >
-              Home
-            </button>
-            <button
-              onClick={() => scrollToSection("how")}
-              className="block w-full text-left"
-            >
-              How It Works
-            </button>
-            <button
-              onClick={() => scrollToSection("features")}
-              className="block w-full text-left"
-            >
-              Features
-            </button>
-            <button
-              onClick={() => scrollToSection("testimonials")}
-              className="block w-full text-left"
-            >
-              Testimonials
-            </button>
+          <div className="md:hidden bg-white border-t border-slate-200 px-4 py-3 space-y-2 animate-slide-down">
+            {["Home", "How It Works", "Features", "Testimonials"].map(
+              (item, idx) => (
+                <a
+                  key={item}
+                  href={`#${["hero", "how", "features", "testimonials"][idx]}`}
+                  className="block text-slate-800 hover:text-teal-600 transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                  aria-label={`Navigate to ${item}`}
+                >
+                  {item}
+                </a>
+              )
+            )}
           </div>
         )}
       </header>
@@ -100,83 +86,123 @@ const LandingPage = () => {
       {/* Hero */}
       <section
         id="hero"
-        className="min-h-screen bg-gradient-to-br from-green-100 to-white flex flex-col items-center justify-center px-4 py-32 text-center"
+        className="min-h-screen bg-gradient-to-br from-teal-100 to-lime-50 flex flex-col md:flex-row items-center justify-center px-6 pt-36 pb-20 text-center md:text-left"
       >
-        <h1 className="text-5xl md:text-6xl font-extrabold mb-4">
-          Welcome to <span className="text-green-600">PantryPal</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-xl mx-auto mb-6">
-          Never forget what's in your kitchen. Stay stocked, save money, and
-          reduce waste with PantryPal.
-        </p>
-        <a href="/dashboard">
-          <button className="bg-green-600 text-white px-6 py-3 rounded-xl shadow-md hover:bg-green-700 transition">
-            Get Started for Free
-          </button>
-        </a>
-      </section>
-
-      {/* How it Works */}
-      <section id="how" className="py-16 bg-gray-50 text-center">
-        <h2 className="text-3xl font-bold mb-4">How It Works</h2>
-        <p className="text-gray-600 mb-8 max-w-xl mx-auto">
-          Track what you have, when it expires, and what you need next in just a
-          few taps.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-16">
-          <div>
-            <div className="text-green-600 text-4xl font-bold mb-2">1</div>
-            <h3 className="font-semibold text-xl">Add Items</h3>
-            <p className="text-gray-500">
-              Scan or enter pantry items with quantity and expiry date.
-            </p>
-          </div>
-          <div>
-            <div className="text-green-600 text-4xl font-bold mb-2">2</div>
-            <h3 className="font-semibold text-xl">Track Usage</h3>
-            <p className="text-gray-500">
-              Use items and reduce quantity as you cook or consume.
-            </p>
-          </div>
-          <div>
-            <div className="text-green-600 text-4xl font-bold mb-2">3</div>
-            <h3 className="font-semibold text-xl">Restock Smartly</h3>
-            <p className="text-gray-500">
-              Get smart shopping suggestions based on what's running low.
-            </p>
-          </div>
+        <div className="max-w-xl space-y-6">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-emerald-700 leading-tight">
+            Smarter Household<br className="hidden md:block" /> Inventory with
+            <span className="text-emerald-600"> HomeIQ</span>
+          </h1>
+          <p className="text-slate-600 text-lg md:text-xl">
+            Organize, track, and manage everything from groceries to cleaning
+            supplies — all in one place.
+          </p>
+          <Link
+            to="/dashboard"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-full hover:bg-emerald-700 transition shadow-lg text-lg"
+          >
+            Get Started <ArrowRightIcon className="w-5 h-5" />
+          </Link>
+        </div>
+        <div className="mt-10 md:mt-0 md:ml-16">
+          <img
+            src={Home}
+            alt="Household inventory illustration"
+            className="w-[300px] md:w-[420px]"
+          />
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-20 bg-white text-center">
-        <h2 className="text-3xl font-bold mb-6">Features</h2>
-        <div className="grid gap-6 max-w-4xl mx-auto">
-          {features.map((feature, idx) => (
+      {/* How it Works */}
+      <section id="how" className="py-16 bg-slate-100 text-center">
+        <h2 className="text-3xl font-bold mb-4 text-slate-800">How It Works</h2>
+        <p className="text-slate-600 mb-6 max-w-md mx-auto">
+          Manage your household inventory in a few taps.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+          {[
+            {
+              step: "1",
+              title: "Add Items",
+              desc: "Enter or scan items with quantities and expiry dates.",
+            },
+            {
+              step: "2",
+              title: "Track Usage",
+              desc: "Update stock as you use items daily.",
+            },
+            {
+              step: "3",
+              title: "Restock Smart",
+              desc: "Get tailored suggestions for restocking.",
+            },
+          ].map((item, idx) => (
             <div
               key={idx}
-              className="flex items-center justify-center gap-3 text-lg"
+              className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
             >
-              <CheckCircleIcon className="w-6 h-6 text-green-500" />
-              <span>{feature}</span>
+              <div className="text-teal-600 text-4xl font-bold mb-2">
+                {item.step}
+              </div>
+              <h3 className="font-semibold text-lg text-slate-800">
+                {item.title}
+              </h3>
+              <p className="text-slate-500 text-sm">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="py-20 bg-green-100 text-center">
-        <h2 className="text-3xl font-bold mb-6">What Users Are Saying</h2>
-        <p className="text-gray-700 italic">
-          "PantryPal saved my groceries and my budget!" – Coming soon.
+      {/* Features Section */}
+      <section id="features" className="bg-white py-16 px-6 text-center">
+        <h2 className="text-3xl font-bold mb-4">Why HomeIQ?</h2>
+        <p className="text-slate-600 max-w-2xl mx-auto mb-10">
+          Simplify your home management with an intuitive inventory system
+          designed for everyday households.
         </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <FeatureCard
+            title="Track Items Easily"
+            description="Log groceries, pantry items, cleaning supplies, and more."
+          />
+          <FeatureCard
+            title="Monitor Shelf Life"
+            description="Get reminded before your products expire or run out."
+          />
+          <FeatureCard
+            title="Smart Household Insights"
+            description="Understand usage patterns to make smarter purchases."
+          />
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="py-16 bg-amber-100 text-center">
+        <h2 className="text-3xl font-bold mb-6 text-slate-800">
+          What Users Say
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+          {testimonials.map((testimonial, idx) => (
+            <div
+              key={idx}
+              className="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <p className="text-slate-600 italic text-sm mb-2">
+                "{testimonial.quote}"
+              </p>
+              <p className="text-teal-600 font-medium text-sm">
+                – {testimonial.author}
+              </p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-10 bg-gray-900 text-white text-center">
-        <h3 className="text-xl font-semibold mb-2">PantryPal</h3>
-        <p className="text-gray-400 text-sm">
-          © {new Date().getFullYear()} PantryPal Inc. All rights reserved.
+      <footer className="py-8 bg-slate-900 text-white text-center">
+        <h3 className="text-lg font-semibold mb-2">HomeIQ</h3>
+        <p className="text-slate-400 text-sm">
+          © {new Date().getFullYear()} HomeIQ Inc. All rights reserved.
         </p>
       </footer>
     </div>

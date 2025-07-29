@@ -78,7 +78,7 @@ const Home = () => {
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white shadow-md p-4">
         <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-green-700">PantryPal</h1>
+          <h1 className="text-2xl font-bold text-green-700">HomeIQ</h1>
           <ul className="flex space-x-6 text-sm md:text-base font-medium">
             <li>
               <a href="#stats" className="hover:text-green-600 transition">
@@ -108,7 +108,7 @@ const Home = () => {
         {/* Header */}
         <header className="text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-green-700">
-            Welcome to PantryPal
+            Welcome to HomeIQ
           </h2>
           <p className="text-gray-600 mt-2">
             Smartly track and manage your household inventory
