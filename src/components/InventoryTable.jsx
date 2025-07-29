@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TrashIcon, MinusIcon } from "@heroicons/react/24/solid";
+import { div } from "framer-motion/client";
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "N/A";
@@ -8,7 +9,7 @@ const formatDate = (dateStr) => {
   return isNaN(date) ? "Invalid date" : date.toLocaleDateString();
 };
 
-const InventoryTable = ({ inventory, onDelete, onDecrement }) => {
+const InventoryTable = ({ inventory, onDelete, onDecrement ,onDeleteStock}) => {
   const stockNames = inventory.map((stock) => stock.stockName);
   const [selectedStock, setSelectedStock] = useState(stockNames[0] || null);
 
@@ -30,17 +31,26 @@ const InventoryTable = ({ inventory, onDelete, onDecrement }) => {
       <div className="w-1/4 bg-gray-50 rounded-lg shadow-md p-4 space-y-3 h-fit sticky top-4">
         <h2 className="text-lg font-semibold text-gray-700 mb-2">📦 Stocks</h2>
         {stockNames.map((stock) => (
-          <button
-            key={stock}
-            onClick={() => setSelectedStock(stock)}
-            className={`block w-full text-left px-3 py-2 rounded-md ${
-              selectedStock === stock
-                ? "bg-blue-600 text-white"
-                : "hover:bg-blue-100 text-gray-800"
-            }`}
-          >
-            {stock}
-          </button>
+          <div key={stock} className="flex items-center justify-between">
+            <button
+              onClick={() => setSelectedStock(stock)}
+              className={`block w-full text-left px-3 py-2 rounded-md ${
+                selectedStock === stock
+                  ? "bg-blue-600 text-white"
+                  : "hover:bg-blue-100 text-gray-800"
+              }`}
+            >
+              {stock.charAt(0).toUpperCase() + stock.slice(1)}
+            </button>
+
+            <button
+              onClick={() => onDeleteStock(stock)}
+              className="p-1 bg-red-100 hover:bg-red-200 text-red-600 rounded-full"
+              title="Delete Stock"
+            >
+              <TrashIcon className="h-5 w-5" />
+            </button>
+          </div>
         ))}
       </div>
 
@@ -49,7 +59,9 @@ const InventoryTable = ({ inventory, onDelete, onDecrement }) => {
         {selectedStockData && (
           <div className="bg-white shadow-lg rounded-xl p-4">
             <h2 className="text-xl font-bold text-blue-700 mb-4">
-              {selectedStockData.stockName}
+              {/* {selectedStockData.stockName} */}
+              {selectedStockData.stockName.charAt(0).toUpperCase() +
+                selectedStockData.stockName.slice(1)}
             </h2>
 
             <div className="overflow-x-auto">
@@ -85,7 +97,9 @@ const InventoryTable = ({ inventory, onDelete, onDecrement }) => {
                         className="hover:bg-gray-50"
                       >
                         <td className="px-4 py-2 text-sm">{item.name}</td>
-                        <td className="px-4 py-2 text-sm">{item.category || "Uncategorized"}</td>
+                        <td className="px-4 py-2 text-sm">
+                          {item.category || "Uncategorized"}
+                        </td>
                         <td className="px-4 py-2 text-sm">{item.quantity}</td>
                         <td className="px-4 py-2 text-sm">
                           {formatDate(item.expiryDate)}
