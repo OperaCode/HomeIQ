@@ -4,6 +4,7 @@ import AddItemForm from "../components/AddItemForm";
 import InventoryTable from "../components/InventoryTable";
 
 const Home = () => {
+  // states
   const [inventory, setInventory] = useState(() => {
     const saved = localStorage.getItem("inventory");
     return saved ? JSON.parse(saved) : [];
@@ -14,6 +15,7 @@ const Home = () => {
     localStorage.setItem("inventory", JSON.stringify(inventory));
   }, [inventory]);
 
+  // to trigger item decreament on use
   const handleDecrement = (id) => {
     setInventory((prev) =>
       prev.map((stock) => ({
@@ -27,11 +29,13 @@ const Home = () => {
     );
   };
 
+  // to add items to stock list
   const handleAddItem = (item) => {
     setInventory((prev) => [...prev, item]);
     console.log("Inventory added " + inventory);
   };
 
+  // to delete items from stocks
   const handleDeleteItem = (id) => {
     setInventory((prev) =>
       prev.map((stock) => ({
@@ -41,79 +45,85 @@ const Home = () => {
     );
   };
 
+  // to delete entire stock array
   const handleDeleteStock = (stockName) => {
     setInventory((prev) =>
       prev.filter((stock) => stock.stockName !== stockName)
     );
   };
 
-
+  // color scheme for expiry stats
   const getExpiryColor = (expiryDate, quantity) => {
-  const now = new Date();
-  const expiry = new Date(expiryDate);
-  const in7Days = new Date();
-  in7Days.setDate(now.getDate() + 7);
+    const now = new Date();
+    const expiry = new Date(expiryDate);
+    const in7Days = new Date();
+    in7Days.setDate(now.getDate() + 7);
 
-  if (isNaN(expiry)) return { label: "Invalid", className: "text-gray-500" };
+    if (isNaN(expiry)) return { label: "Invalid", className: "text-gray-500" };
 
-  if (expiry < now) {
-    return { label: "Expired", className: "text-red-600 font-semibold" };
-  }
+    if (expiry < now) {
+      return { label: "Expired", className: "text-red-600 font-semibold" };
+    }
 
-  if (expiry >= now && expiry <= in7Days) {
-    return { label: "Expiring Soon", className: "text-orange-500 font-medium" };
-  }
+    if (expiry >= now && expiry <= in7Days) {
+      return {
+        label: "Expiring Soon",
+        className: "text-orange-500 font-medium",
+      };
+    }
 
-  if (quantity <= 2) {
-    return { label: "Low Stock", className: "text-yellow-600 font-medium" };
-  }
+    if (quantity <= 2) {
+      return { label: "Low Stock", className: "text-yellow-600 font-medium" };
+    }
 
-  return { label: "", className: "text-green-600" };
-};
-
-
+    return { label: "", className: "text-green-600" };
+  };
 
   return (
     <div className="min-h-screen bg-[#f9fdfb] text-gray-800">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white shadow-md p-4">
-        <div className="max-w-5xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-green-700">HomeIQ</h1>
-          <ul className="flex space-x-6 text-sm md:text-base font-medium">
-            <li>
-              <a href="#stats" className="hover:text-green-600 transition">
-                Stats
-              </a>
-            </li>
-            <li>
-              <a href="#add" className="hover:text-green-600 transition">
-                Add Item
-              </a>
-            </li>
-            <li>
-              <a href="#list" className="hover:text-green-600 transition">
-                Inventory
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-green-600 transition">
-                Exit App
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      {/* Header */}
+      <header>
+        {/* Navbar */}
+        <nav className="sticky top-0 z-50 bg-white shadow-md p-4">
+          <div className="max-w-5xl mx-auto flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-green-700">HomeIQ</h1>
+            <ul className="flex space-x-6 text-sm md:text-base font-medium">
+              <li>
+                <a href="#stats" className="hover:text-green-600 transition">
+                  Stats
+                </a>
+              </li>
+              <li>
+                <a href="#add" className="hover:text-green-600 transition">
+                  Add Item
+                </a>
+              </li>
+              <li>
+                <a href="#list" className="hover:text-green-600 transition">
+                  Inventory
+                </a>
+              </li>
+              <li>
+                <a href="/" className="hover:text-green-600 transition">
+                  Exit App
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
 
       <div className="max-w-5xl mx-auto space-y-10 px-4 py-8 scroll-smooth">
-        {/* Header */}
-        <header className="text-center">
+        
+        {/* Hero */}
+        <section className="text-center">
           <h2 className="text-4xl md:text-5xl font-extrabold text-green-700">
             Welcome to HomeIQ
           </h2>
           <p className="text-gray-600 mt-2">
             Smartly track and manage your household inventory
           </p>
-        </header>
+        </section>
 
         {/* Stats Section */}
         <section id="stats" className="bg-white p-6 rounded-xl shadow-md">

@@ -7,13 +7,9 @@ import {
 import { Link } from "react-router-dom";
 import Home from "../assets/home.png"
 
-const features = [
-  "Track inventory in real time",
-  "Smart expiry alerts",
-  "Usage trends and insights",
-  "Instant shopping lists",
-];
 
+
+// Feature card design
 const FeatureCard = ({ title, description }) => (
   <div className="bg-emerald-100 rounded-2xl p-6 shadow-sm">
     <h3 className="text-xl font-semibold mb-2 text-emerald-800">{title}</h3>
@@ -21,12 +17,14 @@ const FeatureCard = ({ title, description }) => (
   </div>
 );
 
+// testimonials array
 const testimonials = [
   { quote: "HomeIQ keeps my kitchen organized!", author: "Emma L." },
   { quote: "No more wasted food or overbuying!", author: "Liam R." },
 ];
 
 const LandingPage = () => {
+  // states
   const [menuOpen, setMenuOpen] = useState(false);
   const [hoveredFeature, setHoveredFeature] = useState(null);
 
@@ -64,6 +62,7 @@ const LandingPage = () => {
             )}
           </button>
         </div>
+        {/* mobile menu */}
         {menuOpen && (
           <div className="md:hidden bg-white border-t border-slate-200 px-4 py-3 space-y-2 animate-slide-down">
             {["Home", "How It Works", "Features", "Testimonials"].map(
@@ -201,6 +200,7 @@ const LandingPage = () => {
       {/* Footer */}
       <footer className="py-8 bg-slate-900 text-white text-center">
         <h3 className="text-lg font-semibold mb-2">HomeIQ</h3>
+        <p className=" mb-2">Built with ❤️ by Opera- for Homes</p>
         <p className="text-slate-400 text-sm">
           © {new Date().getFullYear()} HomeIQ Inc. All rights reserved.
         </p>

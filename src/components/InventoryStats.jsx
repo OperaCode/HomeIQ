@@ -5,6 +5,8 @@ import {
   ClipboardDocumentListIcon,
 } from "@heroicons/react/24/outline";
 
+
+// stats card UI
 const StatCard = ({ icon: Icon, title, value, bg, text }) => (
   <div className={`flex items-center p-4 rounded-xl shadow-md ${bg} ${text}`}>
     <div className="p-3 bg-white rounded-full shadow mr-4">
@@ -44,6 +46,7 @@ const InventoryStats = ({ inventory }) => {
   }).length;
 
   return (
+    // card stats
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
       <StatCard
         icon={ClipboardDocumentListIcon}

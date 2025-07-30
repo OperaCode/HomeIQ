@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const AddItemForm = ({ onAddStock }) => {
+  // states
   const [stockName, setStockName] = useState("");
   const [registerDate, setRegisterDate] = useState("");
   const [items, setItems] = useState([
@@ -16,6 +17,7 @@ const AddItemForm = ({ onAddStock }) => {
     );
   };
 
+  // add items to list
   const addNewItemField = () => {
     setItems((prev) => [
       ...prev,
@@ -23,6 +25,8 @@ const AddItemForm = ({ onAddStock }) => {
     ]);
   };
 
+
+  // register stock
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!stockName || items.some((item) => item.name.trim() === "")) return;
@@ -33,7 +37,7 @@ const AddItemForm = ({ onAddStock }) => {
       items,
     };
 
-    onAddStock(newStock); // <-- ✅ FIXED FUNCTION NAME
+    onAddStock(newStock); 
 
     // Reset form
     setStockName("");

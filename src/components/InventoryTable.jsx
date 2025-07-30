@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { TrashIcon, MinusIcon } from "@heroicons/react/24/solid";
 import { div } from "framer-motion/client";
 
+// format date 
 const formatDate = (dateStr) => {
   if (!dateStr) return "N/A";
   const date = new Date(dateStr);
